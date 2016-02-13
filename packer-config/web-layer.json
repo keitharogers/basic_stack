@@ -10,8 +10,8 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "eu-west-1",
-    "source_ami": "ami-b265c7c1",
-    "instance_type": "t2.micro",
+    "source_ami": "ami-5a60c229",
+    "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
     "ami_name": "web-node {{timestamp}}"
   }],
