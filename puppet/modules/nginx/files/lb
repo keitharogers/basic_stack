@@ -1,0 +1,14 @@
+http {
+    upstream goapp {
+        server goapp1.example.com:8080;
+        server goapp2.example.com:8080;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://goapp.example.com;
+        }
+    }
+}
