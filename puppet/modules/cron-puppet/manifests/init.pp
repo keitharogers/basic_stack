@@ -9,7 +9,7 @@ class cron-puppet {
     }
     cron { 'puppet-apply':
         ensure  => present,
-        command => "cd /etc/puppet ; /usr/bin/git pull",
+        command => "cd /etc/puppet ; /usr/bin/git pull origin master",
         user    => root,
         minute  => '*/5',
         require => File['post-hook'],
