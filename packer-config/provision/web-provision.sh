@@ -7,6 +7,7 @@ sudo apt-get update -y
 sudo apt-get install puppet git-core -y
 sudo mv /etc/puppet /etc/puppet.orig
 sudo git init /etc
+cd /etc
 sudo git remote add -f origin https://github.com/devopper/basic_stack.git
 sudo git config core.sparseCheckout true
 sudo touch /etc/.git/info/sparse-checkout
