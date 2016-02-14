@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/devopper/basic_stack.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.SparseCheckoutPaths>
+        <sparseCheckoutPaths>
+          <hudson.plugins.git.extensions.impl.SparseCheckoutPath>
+            <path>application/</path>
+          </hudson.plugins.git.extensions.impl.SparseCheckoutPath>
+        </sparseCheckoutPaths>
+      </hudson.plugins.git.extensions.impl.SparseCheckoutPaths>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>* * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>cd $WORKSPACE/application
+go build app.go
+chmod +x app</command>
+    </hudson.tasks.Shell>
+    <jenkins.plugins.publish__over__ssh.BapSshBuilderPlugin plugin="publish-over-ssh@1.13">
+      <delegate>
+        <consolePrefix>SSH: </consolePrefix>
+        <delegate>
+          <publishers>
+            <jenkins.plugins.publish__over__ssh.BapSshPublisher>
+              <configName>Web1</configName>
+              <verbose>false</verbose>
+              <transfers>
+                <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                  <remoteDirectory>$BUILD_NUMBER</remoteDirectory>
+                  <sourceFiles>application/app,application/app.service</sourceFiles>
+                  <excludes></excludes>
+                  <removePrefix></removePrefix>
+                  <remoteDirectorySDF>false</remoteDirectorySDF>
+                  <flatten>false</flatten>
+                  <cleanRemote>false</cleanRemote>
+                  <noDefaultExcludes>false</noDefaultExcludes>
+                  <makeEmptyDirs>false</makeEmptyDirs>
+                  <patternSeparator>[, ]+</patternSeparator>
+                  <execCommand></execCommand>
+                  <execTimeout>120000</execTimeout>
+                  <usePty>false</usePty>
+                </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+              </transfers>
+              <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+              <usePromotionTimestamp>false</usePromotionTimestamp>
+            </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+          </publishers>
+          <continueOnError>false</continueOnError>
+          <failOnError>false</failOnError>
+          <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
+          <hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
+        </delegate>
+      </delegate>
+    </jenkins.plugins.publish__over__ssh.BapSshBuilderPlugin>
+  </builders>
+  <publishers>
+    <jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin plugin="publish-over-ssh@1.13">
+      <consolePrefix>SSH: </consolePrefix>
+      <delegate>
+        <publishers>
+          <jenkins.plugins.publish__over__ssh.BapSshPublisher>
+            <configName>Web1</configName>
+            <verbose>false</verbose>
+            <transfers>
+              <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                <remoteDirectory></remoteDirectory>
+                <sourceFiles></sourceFiles>
+                <excludes></excludes>
+                <removePrefix></removePrefix>
+                <remoteDirectorySDF>false</remoteDirectorySDF>
+                <flatten>false</flatten>
+                <cleanRemote>false</cleanRemote>
+                <noDefaultExcludes>false</noDefaultExcludes>
+                <makeEmptyDirs>false</makeEmptyDirs>
+                <patternSeparator>[, ]+</patternSeparator>
+                <execCommand>chmod +x /home/centos/go/bin/$BUILD_NUMBER/application/app; sudo mv /home/centos/go/bin/$BUILD_NUMBER/application/app.service /etc/systemd/system/app.service; sudo mv /home/centos/go/bin/$BUILD_NUMBER/application/app /home/centos/go/bin/app; sudo systemctl enable app.service &amp;&amp; sudo systemctl restart app.service; rm -rf /home/centos/go/bin/$BUILD_NUMBER</execCommand>
+                <execTimeout>120000</execTimeout>
+                <usePty>true</usePty>
+              </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+            </transfers>
+            <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+            <usePromotionTimestamp>false</usePromotionTimestamp>
+          </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+        </publishers>
+        <continueOnError>false</continueOnError>
+        <failOnError>false</failOnError>
+        <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
+	<hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
+      </delegate>
+    </jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin>
+  </publishers>
+  <buildWrappers>
+    <org.jenkinsci.plugins.golang.GolangBuildWrapper plugin="golang@1.1">
+      <goVersion>Go 1.5.3</goVersion>
+    </org.jenkinsci.plugins.golang.GolangBuildWrapper>
+  </buildWrappers>
+</project>
+
