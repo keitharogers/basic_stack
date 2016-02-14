@@ -10,9 +10,15 @@ sudo sed -i '/exit 0/d' /etc/rc.local
 echo -e "iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080" | sudo tee -a /etc/rc.local
 echo -e "iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j REDIRECT --to-ports 8080" | sudo tee -a /etc/rc.local
 echo -e "exit 0" | sudo tee -a /etc/rc.local
-sudo mkdir -p /var/lib/jenkins/plugins/
+sudo /etc/init.d/jenkins start
+sleep 30
+sudo /etc/init.d/jenkins stop
+sudo [[ -d /var/lib/jenkins/plugins/ ]] mkdir -p /var/lib/jenkins/plugins/
+sudo [[ -d /var/lib/jenkins/.ssh/ ]] mkdir -p /var/lib/jenkins/.ssh/
 sudo wget -O /var/lib/jenkins/plugins/golang.hpi https://updates.jenkins-ci.org/latest/golang.hpi
 sudo wget -O /var/lib/jenkins/plugins/git.hpi https://updates.jenkins-ci.org/latest/git.hpi
+sudo wget -O /var/lib/jenkins/plugins/git-client.hpi https://updates.jenkins-ci.org/latest/git-client.hpi
+sudo wget -O /var/lib/jenkins/plugins/scm-api.hpi https://updates.jenkins-ci.org/latest/scm-api.hpi
 sudo wget -O /var/lib/jenkins/plugins/publish-over-ssh.hpi https://updates.jenkins-ci.org/latest/publish-over-ssh.hpi
 sudo git init /var/lib/jenkins
 cd /var/lib/jenkins
@@ -21,6 +27,6 @@ sudo git config core.sparseCheckout true
 sudo touch /var/lib/jenkins/.git/info/sparse-checkout
 sudo mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.orig
 sudo mv /var/lib/jenkins/.ssh /var/lib/jenkins/.ssh.old
-echo -e "jenkins-config/jobs/" | sudo tee /var/lib/jenkins/.git/info/sparse-checkout
-echo -e "jenkins-config/.ssh/" | sudo tee -a /var/lib/jenkins/.git/info/sparse-checkout
+echo -e "jenkins-config/jobs/*" | sudo tee /var/lib/jenkins/.git/info/sparse-checkout
+echo -e "jenkins-config/.ssh/*" | sudo tee -a /var/lib/jenkins/.git/info/sparse-checkout
 sudo git pull origin master
