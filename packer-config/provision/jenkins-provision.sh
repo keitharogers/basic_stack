@@ -20,13 +20,13 @@ sudo wget -O /var/lib/jenkins/plugins/git.hpi https://updates.jenkins-ci.org/lat
 sudo wget -O /var/lib/jenkins/plugins/git-client.hpi https://updates.jenkins-ci.org/latest/git-client.hpi
 sudo wget -O /var/lib/jenkins/plugins/scm-api.hpi https://updates.jenkins-ci.org/latest/scm-api.hpi
 sudo wget -O /var/lib/jenkins/plugins/publish-over-ssh.hpi https://updates.jenkins-ci.org/latest/publish-over-ssh.hpi
-sudo git init /var/lib/jenkins
-cd /var/lib/jenkins
+sudo git init /var/lib
+cd /var/lib
 sudo git remote add -f origin https://github.com/devopper/basic_stack.git
 sudo git config core.sparseCheckout true
-sudo touch /var/lib/jenkins/.git/info/sparse-checkout
+sudo touch /var/lib/.git/info/sparse-checkout
 sudo mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.orig
 sudo mv /var/lib/jenkins/.ssh /var/lib/jenkins/.ssh.old
-echo -e "jenkins-config/jobs/*" | sudo tee /var/lib/jenkins/.git/info/sparse-checkout
-echo -e "jenkins-config/.ssh/*" | sudo tee -a /var/lib/jenkins/.git/info/sparse-checkout
+echo -e "jenkins-config/jobs/*" | sudo tee /var/lib/.git/info/sparse-checkout
+echo -e "jenkins-config/.ssh/*" | sudo tee -a /var/lib/.git/info/sparse-checkout
 sudo git pull origin master
