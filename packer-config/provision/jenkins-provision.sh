@@ -10,6 +10,7 @@ sudo sed -i '/exit 0/d' /etc/rc.local
 echo -e "iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080" | sudo tee -a /etc/rc.local
 echo -e "iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j REDIRECT --to-ports 8080" | sudo tee -a /etc/rc.local
 echo -e "exit 0" | sudo tee -a /etc/rc.local
+sudo mkdir -p /var/lib/jenkins/plugins/
 sudo wget -O /var/lib/jenkins/plugins/golang.hpi https://updates.jenkins-ci.org/latest/golang.hpi
 sudo wget -O /var/lib/jenkins/plugins/git.hpi https://updates.jenkins-ci.org/latest/git.hpi
 sudo wget -O /var/lib/jenkins/plugins/publish-over-ssh.hpi https://updates.jenkins-ci.org/latest/publish-over-ssh.hpi
