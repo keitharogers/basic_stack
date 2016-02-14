@@ -13,5 +13,3 @@ TimeoutSec=15
 
 [Install]
 WantedBy=multi-user.target
-
-##
