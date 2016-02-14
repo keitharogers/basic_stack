@@ -1,14 +1,12 @@
-#http {
-    upstream goapp {
-        server www.google.co.uk:80;
-        server www.google.de:80;
-    }
+upstream goapp {
+    server www.google.co.uk:80;
+    server www.google.de:80;
+}
 
-    server {
-        listen 80;
+server {
+    listen 80;
 
-        location / {
-            proxy_pass http://127.0.0.1;
-        }
+    location / {
+        proxy_pass http://127.0.0.1;
     }
-#}
+}
