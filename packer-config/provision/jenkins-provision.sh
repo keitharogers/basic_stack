@@ -27,6 +27,7 @@ sudo git config core.sparseCheckout true
 sudo touch /var/lib/.git/info/sparse-checkout
 sudo mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.orig
 sudo mv /var/lib/jenkins/.ssh /var/lib/jenkins/.ssh.old
-echo -e "jenkins-config/jobs/*" | sudo tee /var/lib/.git/info/sparse-checkout
-echo -e "jenkins-config/.ssh/*" | sudo tee -a /var/lib/.git/info/sparse-checkout
+echo -e "jenkins/jobs/*" | sudo tee /var/lib/.git/info/sparse-checkout
+echo -e "jenkins/.ssh/*" | sudo tee -a /var/lib/.git/info/sparse-checkout
 sudo git pull origin master
+sudo chown -R jenkins:jenkins /var/lib/jenkins/
