@@ -1,7 +1,7 @@
 #http {
     upstream goapp {
-        server goapp1.example.com:8080;
-        server goapp2.example.com:8080;
+        server www.google.co.uk:80;
+        server www.google.de:80;
     }
 
     server {
