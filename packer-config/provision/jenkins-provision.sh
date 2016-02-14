@@ -12,3 +12,4 @@ echo -e "iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j REDIRECT --
 echo -e "exit 0" | sudo tee -a /etc/rc.local
 sudo wget -O /var/lib/jenkins/plugins/golang.hpi https://updates.jenkins-ci.org/latest/golang.hpi
 sudo wget -O /var/lib/jenkins/plugins/git.hpi https://updates.jenkins-ci.org/latest/git.hpi
+sudo wget -O /var/lib/jenkins/plugins/envinject.hpi https://updates.jenkins-ci.org/latest/envinject.hpi
