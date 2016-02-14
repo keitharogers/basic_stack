@@ -1,4 +1,4 @@
-http {
+#http {
     upstream goapp {
         server goapp1.example.com:8080;
         server goapp2.example.com:8080;
@@ -11,4 +11,4 @@ http {
             proxy_pass http://goapp.example.com;
         }
     }
-}
+#}
