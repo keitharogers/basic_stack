@@ -4,7 +4,7 @@ To test that the round-robin load balancer is working correctly, simply browse [
 
 ## How does this work?
 
-After creating custom AMI's using the packer configs (see for more details below), [Terraform](https://github.com/devopper/basic_stack/tree/master/terraform-config) is executed using 1 line to create an entire stack in AWS, which once created allows Jenkins to automatically build and deploy our application and make it viewable through an Nginx load balancer [here](http://www.devopper.co.uk/). No additional user interaction is required after executing Terraform. The whole process takes around 5-10 minutes to complete.
+After creating custom AMI's using the packer configs (see for more details below), [Terraform](https://github.com/devopper/basic_stack/tree/master/terraform-config) is executed using 1 line to create an entire stack in AWS, which once created allows Jenkins to automatically build and deploy our application and make it viewable through an Nginx round-robin load balancer [here](http://www.devopper.co.uk/). No additional user interaction is required after executing Terraform. The whole process takes around 5-10 minutes to complete.
 
 ## Further Reading
 
