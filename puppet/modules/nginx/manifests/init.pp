@@ -6,10 +6,6 @@ class nginx {
 		ensure => present,
 	        require => Exec['apt-get update'],
 	}
-	service { 'nginx':
-	        ensure => running,
-	        require => Package['nginx'],
-	}
 	file { 'lb-nginx':
 		path => '/etc/nginx/sites-available/lb',
 	        ensure => file,
@@ -31,4 +27,9 @@ class nginx {
 		        File['default-nginx-disable'],
        		],
 	}
+        service { 'nginx':
+                ensure => running,
+                require => Package['nginx'],
+        }
+
 }
