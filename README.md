@@ -9,9 +9,9 @@ The intention of this project is to demonstrate how to automate full stack deplo
 | Tool | Description |
 | ---- | ----------- |
 | Packer | Used to automate the creation of machine images, in our case AMI's |
-| Jenkins | We use this to build and deploy our example Go application |
+| Jenkins | I use this to build and deploy our example Go application |
 | Puppet | In this case, used in a masterless configuration to setup and configure Nginx |
-| Terraform | Define and build your infrastructure along with security groups etc (AWS) |
+| Terraform | I use this to automatically build and deploy our infrastructure in AWS |
 
 
 
