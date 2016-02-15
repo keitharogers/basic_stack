@@ -13,5 +13,13 @@ The intention of this project is to demonstrate how to automate full stack deplo
 | Puppet | In this case, used in a masterless configuration to setup and configure Nginx |
 | Terraform | I use this to automatically build and deploy our infrastructure in AWS |
 
+## More Details
 
+For further technical details relating to this project, please see each of the readme's at the following locations:
+
+[Packer](https://github.com/devopper/basic_stack/tree/master/packer-config)
+[Jenkins](https://github.com/devopper/basic_stack/tree/master/jenkins)
+[Puppet](https://github.com/devopper/basic_stack/tree/master/puppet)
+[Terraform](https://github.com/devopper/basic_stack/tree/master/terraform-config)
+[Application](https://github.com/devopper/basic_stack/tree/master/application)
 
