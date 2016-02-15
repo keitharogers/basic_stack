@@ -4,8 +4,8 @@ class nginx {
 	}
 	
 	service { "nginx":
-		require => Package["nginx"]
-		ensure => running,
+		require => Package["nginx"],
+		ensure => "running",
 		enable => true
 	}
 	
