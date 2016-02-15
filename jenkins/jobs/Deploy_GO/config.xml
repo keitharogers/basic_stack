@@ -34,7 +34,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.SCMTrigger>
-      <spec>* * * * *</spec>
+      <spec>*/15 * * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
     </hudson.triggers.SCMTrigger>
   </triggers>
@@ -51,7 +51,30 @@ chmod +x app</command>
         <delegate>
           <publishers>
             <jenkins.plugins.publish__over__ssh.BapSshPublisher>
-              <configName>Web1</configName>
+              <configName>app-node1</configName>
+              <verbose>false</verbose>
+              <transfers>
+                <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                  <remoteDirectory>$BUILD_NUMBER</remoteDirectory>
+                  <sourceFiles>application/app,application/app.service</sourceFiles>
+                  <excludes></excludes>
+                  <removePrefix></removePrefix>
+                  <remoteDirectorySDF>false</remoteDirectorySDF>
+                  <flatten>false</flatten>
+                  <cleanRemote>false</cleanRemote>
+                  <noDefaultExcludes>false</noDefaultExcludes>
+                  <makeEmptyDirs>false</makeEmptyDirs>
+                  <patternSeparator>[, ]+</patternSeparator>
+                  <execCommand></execCommand>
+                  <execTimeout>120000</execTimeout>
+                  <usePty>false</usePty>
+                </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+              </transfers>
+              <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+              <usePromotionTimestamp>false</usePromotionTimestamp>
+            </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+            <jenkins.plugins.publish__over__ssh.BapSshPublisher>
+              <configName>app-node2</configName>
               <verbose>false</verbose>
               <transfers>
                 <jenkins.plugins.publish__over__ssh.BapSshTransfer>
@@ -88,7 +111,7 @@ chmod +x app</command>
       <delegate>
         <publishers>
           <jenkins.plugins.publish__over__ssh.BapSshPublisher>
-            <configName>Web1</configName>
+            <configName>app-node1</configName>
             <verbose>false</verbose>
             <transfers>
               <jenkins.plugins.publish__over__ssh.BapSshTransfer>
@@ -110,11 +133,34 @@ chmod +x app</command>
             <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
             <usePromotionTimestamp>false</usePromotionTimestamp>
           </jenkins.plugins.publish__over__ssh.BapSshPublisher>
+          <jenkins.plugins.publish__over__ssh.BapSshPublisher>
+            <configName>app-node2</configName>
+            <verbose>false</verbose>
+            <transfers>
+              <jenkins.plugins.publish__over__ssh.BapSshTransfer>
+                <remoteDirectory></remoteDirectory>
+                <sourceFiles></sourceFiles>
+                <excludes></excludes>
+                <removePrefix></removePrefix>
+                <remoteDirectorySDF>false</remoteDirectorySDF>
+                <flatten>false</flatten>
+                <cleanRemote>false</cleanRemote>
+                <noDefaultExcludes>false</noDefaultExcludes>
+                <makeEmptyDirs>false</makeEmptyDirs>
+                <patternSeparator>[, ]+</patternSeparator>
+                <execCommand>chmod +x /home/centos/go/bin/$BUILD_NUMBER/application/app; sudo mv /home/centos/go/bin/$BUILD_NUMBER/application/app.service /etc/systemd/system/app.service; sudo mv /home/centos/go/bin/$BUILD_NUMBER/application/app /home/centos/go/bin/app; sudo systemctl enable app.service &amp;&amp; sudo systemctl restart app.service; rm -rf /home/centos/go/bin/$BUILD_NUMBER</execCommand>
+                <execTimeout>120000</execTimeout>
+                <usePty>false</usePty>
+              </jenkins.plugins.publish__over__ssh.BapSshTransfer>
+            </transfers>
+            <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+            <usePromotionTimestamp>false</usePromotionTimestamp>
+          </jenkins.plugins.publish__over__ssh.BapSshPublisher>
         </publishers>
         <continueOnError>false</continueOnError>
         <failOnError>false</failOnError>
         <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
-	<hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
+        <hostConfigurationAccess class="jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin" reference="../.."/>
       </delegate>
     </jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin>
   </publishers>
@@ -124,4 +170,3 @@ chmod +x app</command>
     </org.jenkinsci.plugins.golang.GolangBuildWrapper>
   </buildWrappers>
 </project>
-
