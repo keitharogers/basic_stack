@@ -1,36 +1,47 @@
 class nginx {
-	exec { 'apt-get update':
-		command => '/usr/bin/apt-get update',
+	package { "nginx":
+		ensure => installed
 	}
-	package { 'nginx':
-		ensure => present,
-	        require => Exec['apt-get update'],
+	
+	service { "nginx":
+		require => Package["nginx"]
+		ensure => running,
+		enable => true
 	}
-	file { 'lb-nginx':
-		path => '/etc/nginx/sites-available/lb',
-	        ensure => file,
-	        require => Package['nginx'],
-	        source => 'puppet:///modules/nginx/lb',
-		notify => Service['nginx'],
+	
+	file { "/etc/nginx/sites-enabled/default":
+		require => Package["nginx"],
+		ensure => absent,
+		notify => Service["nginx"]
 	}
-	file { 'default-nginx-disable':
-	        path => '/etc/nginx/sites-enabled/default',
-	        ensure => absent,
-	        require => Package['nginx'],
-	}
-	file { 'lb-nginx-enable':
-	        path => '/etc/nginx/sites-enabled/lb',
-	        target => '/etc/nginx/sites-available/lb',
-	        ensure => link,
-	        notify => Service['nginx'],
-	        require => [
-			File['lb-nginx'],
-		        File['default-nginx-disable'],
-       		],
-	}
-        service { 'nginx':
-                ensure => running,
-                require => Package['nginx'],
-        }
 
+	file { "/etc/nginx/sites-available/lb":
+		require => [
+			Package["nginx"],
+			File["/lb"]
+		],
+		ensure => "file",
+		content =>
+			"upstream goapp {
+				server app-node1.devopper.co.uk:8080 weight=1;
+				server app-node2.devopper.co.uk:8080 weight=2;
+			 }
+			 
+			 server {
+				listen 80;
+				server_name www.devopper.co.uk;
+				location / {
+					proxy_pass http://goapp;
+				}
+			 }
+		}",
+		notify => Service["nginx"]
+	}
+
+	file { "/etc/nginx/sites-enabled/lb":
+		require => File["/etc/nginx/sites-available/lb"],
+		ensure => "link",
+		target => "/etc/nginx/sites-available/lb",
+		notify => Service["nginx"]
+	}
 }
