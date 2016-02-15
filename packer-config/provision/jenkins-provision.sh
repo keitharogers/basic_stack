@@ -27,7 +27,26 @@ sudo git config core.sparseCheckout true
 sudo touch /var/lib/.git/info/sparse-checkout
 sudo mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.orig
 sudo mv /var/lib/jenkins/.ssh /var/lib/jenkins/.ssh.old
-echo -e "jenkins/jobs/*" | sudo tee /var/lib/.git/info/sparse-checkout
+sudo mv /var/lib/jenkins/hudson.maven.MavenModuleSet.xml /var/lib/jenkins/hudson.maven.MavenModuleSet.xml.orig
+sudo mv /var/lib/jenkins/hudson.model.UpdateCenter.xml /var/lib/jenkins/hudson.model.UpdateCenter.xml.orig
+sudo mv /var/lib/jenkins/hudson.plugins.git.GitSCM.xml /var/lib/jenkins/hudson.plugins.git.GitSCM.xml.orig
+sudo mv /var/lib/jenkins/hudson.plugins.git.GitTool.xml /var/lib/jenkins/hudson.plugins.git.GitTool.xml.orig
+sudo mv /var/lib/jenkins/hudson.scm.CVSSCM.xml /var/lib/jenkins/hudson.scm.CVSSCM.xml.orig
+sudo mv /var/lib/jenkins/hudson.scm.SubversionSCM.xml /var/lib/jenkins/hudson.scm.SubversionSCM.xml.orig
+sudo mv /var/lib/jenkins/hudson.tasks.Ant.xml /var/lib/jenkins/hudson.tasks.Ant.xml.orig
+sudo mv /var/lib/jenkins/hudson.tasks.Mailer.xml /var/lib/jenkins/hudson.tasks.Mailer.xml.orig
+sudo mv /var/lib/jenkins/hudson.tasks.Maven.xml /var/lib/jenkins/hudson.tasks.Maven.xml.orig
+sudo mv /var/lib/jenkins/hudson.tasks.Shell.xml /var/lib/jenkins/hudson.tasks.Shell.xml.orig
+sudo mv /var/lib/jenkins/hudson.triggers.SCMTrigger.xml /var/lib/jenkins/hudson.triggers.SCMTrigger.xml.orig
+sudo mv /var/lib/jenkins/jenkins.model.ArtifactManagerConfiguration.xml /var/lib/jenkins/jenkins.model.ArtifactManagerConfiguration.xml.orig
+sudo mv /var/lib/jenkins/jenkins.model.DownloadSettings.xml /var/lib/jenkins/jenkins.model.DownloadSettings.xml.orig
+sudo mv /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml.orig
+sudo mv /var/lib/jenkins/jenkins.mvn.GlobalMavenConfig.xml /var/lib/jenkins/jenkins.mvn.GlobalMavenConfig.xml.orig
+sudo mv /var/lib/jenkins/jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin.xml /var/lib/jenkins/jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin.xml.orig
+sudo mv /var/lib/jenkins/jenkins.security.QueueItemAuthenticatorConfiguration.xml /var/lib/jenkins/jenkins.security.QueueItemAuthenticatorConfiguration.xml.orig
+sudo mv /var/lib/jenkins/org.jenkinsci.plugins.gitclient.JGitTool.xml /var/lib/jenkins/org.jenkinsci.plugins.gitclient.JGitTool.xml.orig
+sudo mv /var/lib/jenkins/org.jenkinsci.plugins.golang.GolangBuildWrapper.xml /var/lib/jenkins/org.jenkinsci.plugins.golang.GolangBuildWrapper.xml.orig
+echo -e "jenkins/*" | sudo tee /var/lib/.git/info/sparse-checkout
 echo -e "jenkins/.ssh/*" | sudo tee -a /var/lib/.git/info/sparse-checkout
 sudo git pull origin master
 sudo chown -R jenkins:jenkins /var/lib/jenkins/
