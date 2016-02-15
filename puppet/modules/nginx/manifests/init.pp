@@ -32,7 +32,6 @@ class nginx {
 				location / {
 					proxy_pass http://goapp;
 				}
-			 }
 		}",
 		notify => Service["nginx"]
 	}
