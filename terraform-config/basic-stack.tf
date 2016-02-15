@@ -6,7 +6,7 @@ provider "aws" {
 
 resource "aws_security_group" "web-node" {
 	name = "web-node"
-	description = "Allow all inbound traffic"
+	description = "Web Security Group"
 
 	ingress {
 		from_port = 80
@@ -32,7 +32,7 @@ resource "aws_security_group" "web-node" {
 
 resource "aws_security_group" "app-node" {
         name = "app-node"
-        description = "Allow all inbound traffic"
+        description = "App Security Group"
 
  	ingress {
                 from_port = 8080
@@ -56,6 +56,31 @@ resource "aws_security_group" "app-node" {
         }
 }
 
+resource "aws_security_group" "jenkins-node" {
+        name = "app-node"
+        description = "Jenkins Security Group"
+
+        ingress {
+                from_port = 80
+                to_port = 80
+                protocol = "tcp"
+                cidr_blocks = ["0.0.0.0/0"]
+        }
+
+        ingress {
+                from_port = 22
+                to_port = 22
+                protocol = "tcp"
+                cidr_blocks = ["0.0.0.0/0"]
+        }
+
+        egress {
+                from_port = 0
+                to_port = 0
+                protocol = "-1"
+                cidr_blocks = ["0.0.0.0/0"]
+        }
+}
 
 resource "aws_instance" "web-node" {
 	ami = "ami-0821927b"
@@ -78,11 +103,18 @@ resource "aws_instance" "app-node-2" {
         security_groups = ["${aws_security_group.app-node.name}"]
 }
 
+resource "aws_instance" "jenkins-node" {
+        ami = "ami-4ae05239"
+        instance_type = "t1.micro"
+        key_name = "misc.keithrogers.co.uk"
+        security_groups = ["${aws_security_group.jenkins-node.name}"]
+}
+
 resource "aws_route53_record" "www" {
 	zone_id = "Z164FRIYAHB8LT"
 	name = "www.devopper.co.uk"
 	type = "A"
-	ttl = "300"
+	ttl = "60"
 	records = ["${aws_instance.web-node.public_ip}"]
 }
 
@@ -90,7 +122,7 @@ resource "aws_route53_record" "app-node1" {
         zone_id = "Z164FRIYAHB8LT"
         name = "app-node1.devopper.co.uk"
         type = "A"
-        ttl = "300"
+        ttl = "60"
         records = ["${aws_instance.app-node-1.public_ip}"]
 }
 
@@ -98,6 +130,15 @@ resource "aws_route53_record" "app-node2" {
         zone_id = "Z164FRIYAHB8LT"
         name = "app-node2.devopper.co.uk"
         type = "A"
-        ttl = "300"
+        ttl = "60"
         records = ["${aws_instance.app-node-2.public_ip}"]
 }
+
+resource "aws_route53_record" "jenkins" {
+        zone_id = "Z164FRIYAHB8LT"
+        name = "jenkins.devopper.co.uk"
+        type = "A"
+        ttl = "60"
+        records = ["${aws_instance.jenkins-node.public_ip}"]
+}
+
