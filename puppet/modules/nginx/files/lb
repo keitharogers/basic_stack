@@ -5,7 +5,7 @@ upstream goapp {
 
 server {
     listen 80;
-    server_name www.devopper.co.uk
+    server_name www.devopper.co.uk;
     location / {
         proxy_pass http://goapp;
     }
