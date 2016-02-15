@@ -23,7 +23,7 @@ class nginx {
 		content =>
 			"upstream goapp {
 				server app-node1.devopper.co.uk:8080 weight=1;
-				server app-node2.devopper.co.uk:8080 weight=3;
+				server app-node2.devopper.co.uk:8080 weight=2;
 			 }
 			 
 			 server {
