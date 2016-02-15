@@ -150,7 +150,7 @@ chmod +x app</command>
                 <patternSeparator>[, ]+</patternSeparator>
                 <execCommand>chmod +x /home/centos/go/bin/$BUILD_NUMBER/application/app; sudo mv /home/centos/go/bin/$BUILD_NUMBER/application/app.service /etc/systemd/system/app.service; sudo mv /home/centos/go/bin/$BUILD_NUMBER/application/app /home/centos/go/bin/app; sudo systemctl enable app.service &amp;&amp; sudo systemctl restart app.service; rm -rf /home/centos/go/bin/$BUILD_NUMBER</execCommand>
                 <execTimeout>120000</execTimeout>
-                <usePty>false</usePty>
+                <usePty>true</usePty>
               </jenkins.plugins.publish__over__ssh.BapSshTransfer>
             </transfers>
             <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
