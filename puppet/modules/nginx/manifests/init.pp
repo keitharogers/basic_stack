@@ -18,7 +18,6 @@ class nginx {
 	file { "/etc/nginx/sites-available/lb":
 		require => [
 			Package["nginx"],
-			File["/lb"]
 		],
 		ensure => "file",
 		content =>
