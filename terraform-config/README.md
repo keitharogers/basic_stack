@@ -20,7 +20,7 @@ The entire process described above is automated by simply running the following 
 
 Terraform maintains a state file to keep track of any changes to the infrastructure.
 
-The full Terraform provisioning script is displayed below:
+The full Terraform provisioning script is displayed below. The 'ami' id's displayed under the 'aws_instance' resource sections refer to the ami's that were created with Packer earlier on:
 
 ```
 provider "aws" {
