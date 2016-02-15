@@ -11,6 +11,7 @@ class nginx {
 	        ensure => file,
 	        require => Package['nginx'],
 	        source => 'puppet:///modules/nginx/lb',
+		notify => Service['nginx'],
 	}
 	file { 'default-nginx-disable':
 	        path => '/etc/nginx/sites-enabled/default',
