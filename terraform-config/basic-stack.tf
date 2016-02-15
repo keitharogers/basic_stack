@@ -57,7 +57,7 @@ resource "aws_security_group" "app-node" {
 }
 
 resource "aws_security_group" "jenkins-node" {
-        name = "app-node"
+        name = "jenkins-node"
         description = "Jenkins Security Group"
 
         ingress {
