@@ -20,9 +20,9 @@ The entire process described above is automated by simply running the following 
 
 Terraform maintains a state file to keep track of any changes to the infrastructure.
 
-The full stack config for Terraform is shown below:
+The full Terraform provisioning script is displayed below:
 
-```terraform
+```
 provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
