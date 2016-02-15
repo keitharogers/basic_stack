@@ -12,14 +12,14 @@ resource "aws_security_group" "web-node" {
 		from_port = 80
 		to_port = 80
 		protocol = "tcp"
-		cidr_blocks = ["136.243.157.121/32"]
+		cidr_blocks = ["0.0.0.0/0"]
 	}
 
 	ingress {
 		from_port = 22
 		to_port = 22
 		protocol = "tcp"
-		cidr_blocks = ["136.243.157.121/32"]
+		cidr_blocks = ["0.0.0.0/0"]
 	}		
 
 	egress {
@@ -34,32 +34,18 @@ resource "aws_security_group" "app-node" {
         name = "app-node"
         description = "Allow all inbound traffic"
 
-        ingress {
-                from_port = 8080
-                to_port = 8080
-                protocol = "tcp"
-                cidr_blocks = ["${aws_instance.web-node.public_ip}/32"]
-        }
-
  	ingress {
                 from_port = 8080
                 to_port = 8080
                 protocol = "tcp"
-                cidr_blocks = ["136.243.157.121/32"]
+                cidr_blocks = ["0.0.0.0/0"]
         }
 
         ingress {
                 from_port = 22
                 to_port = 22
                 protocol = "tcp"
-                cidr_blocks = ["136.243.157.121/32"]
-        }
-
-	ingress {
-                from_port = 22
-                to_port = 22
-                protocol = "tcp"
-                cidr_blocks = ["52.49.146.13/32"]
+                cidr_blocks = ["0.0.0.0/0"]
         }
 
         egress {
